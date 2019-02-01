@@ -1,10 +1,12 @@
-package com.wishlist.model;
+package com.wishlist.persistance.entity;
+
+import com.wishlist.persistance.entity.UserEntity;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "wish")
-public class Wish {
+public class WishEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -21,9 +23,17 @@ public class Wish {
     @Column(name = "price", nullable = false)
     private double price;
 
-    @ManyToOne
+
+    /*@ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
-    private User owner;
+    private UserEntity owner;*/
+    /*public UserEntity getOwner() {
+        return owner;
+    }
+
+    public void setOwner(UserEntity owner) {
+        this.owner = owner;
+    }*/
 
     public Long getId() {
         return id;
@@ -65,17 +75,9 @@ public class Wish {
         this.price = price;
     }
 
-    public User getOwner() {
-        return owner;
-    }
-
-    public void setOwner(User owner) {
-        this.owner = owner;
-    }
-
     @Override
     public String toString() {
-        return "Wish{" +
+        return "WishEntity{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", link='" + link + '\'' +

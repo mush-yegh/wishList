@@ -1,13 +1,12 @@
-package com.wishlist.model;
+package com.wishlist.persistance.entity;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "user")
-public class User {
+public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -32,16 +31,16 @@ public class User {
 
 
     //=======================================================
-    @OneToMany(mappedBy = "owner", targetEntity = Wish.class)
-    private List<Wish> wishes;
+    /*@OneToMany(mappedBy = "owner", targetEntity = WishEntity.class)
+    private List<WishEntity> wishes;
 
-    public List<Wish> getWishes() {
+    public List<WishEntity> getWishes() {
         return wishes;
     }
 
-    public void setWishes(List<Wish> wishes) {
+    public void setWishes(List<WishEntity> wishes) {
         this.wishes = wishes;
-    }
+    }*/
     //=======================================================
 
 
@@ -104,7 +103,7 @@ public class User {
 
     @Override
     public String toString() {
-        return "User{" +
+        return "UserEntity{" +
                 "id=" + id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +

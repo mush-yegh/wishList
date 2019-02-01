@@ -1,12 +1,11 @@
 package com.wishlist.controller;
 
-import com.wishlist.model.User;
-import com.wishlist.repository.UserRepository;
+import com.wishlist.persistance.entity.UserEntity;
+import com.wishlist.service.UserService;
+import com.wishlist.service.dto.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Required;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,32 +13,37 @@ import java.util.Optional;
 @RequestMapping("/users")
 public class UserController {
 
+    /*@Autowired
+    private UserRepository userRepository;*/
+    private final UserService userService;
     @Autowired
-    private UserRepository userRepository;
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
-    @RequestMapping(value = "", method = RequestMethod.GET)
-    public List<User> getAllUsers(@RequestParam(name="lastName", required = false) String lastName) {
-        List<User> users = null;
+    /*@RequestMapping(value = "", method = RequestMethod.GET)
+    public List<UserEntity> getAllUsers(@RequestParam(name="lastName", required = false) String lastName) {
+        List<UserEntity> users = null;
         if(lastName != null){
             users = userRepository.findByLastName(lastName);
         }else{
-            users = (List<User>) userRepository.findAll();
+            users = (List<UserEntity>) userRepository.findAll();
         }
         return users;
-    }
+    }*/
 
     @RequestMapping(value = "/{userId}", method = RequestMethod.GET)
-    public Optional<User> getUserById(@PathVariable Long userId) {
-        Optional<User> user = userRepository.findById(userId);
+    public UserDto getUserById(@PathVariable Long userId) {
+        UserDto user = userService.findById(userId);
         return user;
     }
 
 
-    @RequestMapping(value = "", method = RequestMethod.POST)
-    public String addNewUser(User newUser) {
+   /* @RequestMapping(value = "", method = RequestMethod.POST)
+    public String addNewUser(UserEntity newUser) {
         System.out.println(newUser);
         userRepository.save(newUser);
         return "saved";
         //curl -d "firstName=Mushegh&lastName=Yegh&mail=mush@gmail.com&birthDate=1988-01-01" -X POST http://localhost:8080/addUser
-    }
+    }*/
 }
