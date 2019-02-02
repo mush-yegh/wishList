@@ -1,14 +1,18 @@
 package com.wishlist.persistance.entity;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
 
-//@Data
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "user")
 //@ToString(exclude = "wishes")
@@ -39,73 +43,13 @@ public class UserEntity {
     @JsonManagedReference
     private List<WishEntity> wishes;
 
-
-    /*public void setBirthDate(String birthDate) {
-
-        this.birthDate = LocalDate.parse(birthDate);
-    }*/
-
-    public Long getId() {
-        return id;
+    public UserEntity(CreateUser user) {
+        this.firstName = user.getFirstName();
+        this.lastName = user.getLastName();
+        this.birthDate = LocalDate.parse(user.getBirthDate());
+        this.mail = user.getMail();
+        this.active = 1;
+        this.created = LocalDate.now();
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getMail() {
-        return mail;
-    }
-
-    public void setMail(String mail) {
-        this.mail = mail;
-    }
-
-    public LocalDate getBirthDate() {
-        return birthDate;
-    }
-
-    public void setBirthDate(LocalDate birthDate) {
-        this.birthDate = birthDate;
-    }
-
-    public Byte getActive() {
-        return active;
-    }
-
-    public void setActive(Byte active) {
-        this.active = active;
-    }
-
-    public LocalDate getCreated() {
-        return created;
-    }
-
-    public void setCreated(LocalDate created) {
-        this.created = created;
-    }
-
-    public List<WishEntity> getWishes() {
-        return wishes;
-    }
-
-    public void setWishes(List<WishEntity> wishes) {
-        this.wishes = wishes;
-    }
 }

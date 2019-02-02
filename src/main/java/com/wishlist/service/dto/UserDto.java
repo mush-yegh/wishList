@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Data
 @Builder
@@ -24,6 +25,13 @@ public class UserDto {
                 .lastName(userEntity.getLastName())
                 .wishes(userEntity.getWishes())
                 .build();
+    }
+
+    public static List<UserDto> mapUserEntitiesToDto(List<UserEntity> userEntities){
+
+        return userEntities.stream()
+                .map(UserDto::mapEntityToDto)
+                .collect(Collectors.toList());
     }
 
 }
