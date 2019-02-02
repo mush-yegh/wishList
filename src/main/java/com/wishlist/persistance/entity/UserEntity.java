@@ -1,5 +1,6 @@
 package com.wishlist.persistance.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import lombok.ToString;
 
@@ -7,7 +8,7 @@ import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
 
-@Data
+//@Data
 @Entity
 @Table(name = "user")
 //@ToString(exclude = "wishes")
@@ -35,12 +36,76 @@ public class UserEntity {
     private LocalDate created;
 
     @OneToMany(mappedBy = "owner")
+    @JsonManagedReference
     private List<WishEntity> wishes;
 
 
-    public void setBirthDate(String birthDate) {
+    /*public void setBirthDate(String birthDate) {
 
         this.birthDate = LocalDate.parse(birthDate);
+    }*/
+
+    public Long getId() {
+        return id;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getMail() {
+        return mail;
+    }
+
+    public void setMail(String mail) {
+        this.mail = mail;
+    }
+
+    public LocalDate getBirthDate() {
+        return birthDate;
+    }
+
+    public void setBirthDate(LocalDate birthDate) {
+        this.birthDate = birthDate;
+    }
+
+    public Byte getActive() {
+        return active;
+    }
+
+    public void setActive(Byte active) {
+        this.active = active;
+    }
+
+    public LocalDate getCreated() {
+        return created;
+    }
+
+    public void setCreated(LocalDate created) {
+        this.created = created;
+    }
+
+    public List<WishEntity> getWishes() {
+        return wishes;
+    }
+
+    public void setWishes(List<WishEntity> wishes) {
+        this.wishes = wishes;
+    }
 }

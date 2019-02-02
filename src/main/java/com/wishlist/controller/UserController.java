@@ -20,16 +20,6 @@ public class UserController {
     @Autowired
     private UserRepository userRepository;
 
-    /*@RequestMapping(value = "", method = RequestMethod.GET)
-    public List<UserEntity> getAllUsers(@RequestParam(name="lastName", required = false) String lastName) {
-        List<UserEntity> users = null;
-        if(lastName != null){
-            users = userRepository.findByLastName(lastName);
-        }else{
-            users = (List<UserEntity>) userRepository.findAll();
-        }
-        return users;
-    }*/
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     public List<UserDto> getUsers() {
@@ -42,12 +32,4 @@ public class UserController {
         return user;
     }
 
-
-   /* @RequestMapping(value = "", method = RequestMethod.POST)
-    public String addNewUser(UserEntity newUser) {
-        System.out.println(newUser);
-        userRepository.save(newUser);
-        return "saved";
-        //curl -d "firstName=Mushegh&lastName=Yegh&mail=mush@gmail.com&birthDate=1988-01-01" -X POST http://localhost:8080/addUser
-    }*/
 }

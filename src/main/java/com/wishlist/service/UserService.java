@@ -6,7 +6,6 @@ import com.wishlist.service.dto.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
 
 @Service
 public class UserService {
@@ -15,11 +14,9 @@ public class UserService {
     private UserRepository userRepository;
 
     public UserDto findById(Long userId) {
-        Optional<UserEntity> userEntity = userRepository.findById(userId);
-        System.out.println(userEntity);
+        UserEntity userEntity = userRepository.findById(userId).get();
 
-        //return UserDto.mapEntityToDto(userEntity);
-        return null;
+        return UserDto.mapEntityToDto(userEntity);
     }
 
 

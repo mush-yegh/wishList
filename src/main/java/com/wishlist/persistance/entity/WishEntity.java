@@ -1,5 +1,6 @@
 package com.wishlist.persistance.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.wishlist.persistance.entity.UserEntity;
 import lombok.Data;
 import lombok.ToString;
@@ -28,6 +29,7 @@ public class WishEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
+    @JsonBackReference
     private UserEntity owner;
 
     @Override
@@ -40,4 +42,5 @@ public class WishEntity {
                 ", price=" + price +
                 '}';
     }
+
 }
