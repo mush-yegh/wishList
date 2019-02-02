@@ -1,9 +1,12 @@
 package com.wishlist.persistance.entity;
 
 import com.wishlist.persistance.entity.UserEntity;
+import lombok.Data;
+import lombok.ToString;
 
 import javax.persistence.*;
 
+@Data
 @Entity
 @Table(name = "wish")
 public class WishEntity {
@@ -11,69 +14,21 @@ public class WishEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "title" , nullable = false)
+    @Column(name = "title", nullable = false)
     private String title;
 
     @Column(name = "link")
     private String link;
 
     @Column(name = "description")
-    private  String description;
+    private String description;
 
     @Column(name = "price", nullable = false)
     private double price;
 
-
-    /*@ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
-    private UserEntity owner;*/
-    /*public UserEntity getOwner() {
-        return owner;
-    }
-
-    public void setOwner(UserEntity owner) {
-        this.owner = owner;
-    }*/
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getLink() {
-        return link;
-    }
-
-    public void setLink(String link) {
-        this.link = link;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
-    }
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private UserEntity owner;
 
     @Override
     public String toString() {

@@ -1,6 +1,7 @@
 package com.wishlist.controller;
 
 import com.wishlist.persistance.entity.UserEntity;
+import com.wishlist.persistance.repository.UserRepository;
 import com.wishlist.service.UserService;
 import com.wishlist.service.dto.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,13 +14,11 @@ import java.util.Optional;
 @RequestMapping("/users")
 public class UserController {
 
-    /*@Autowired
-    private UserRepository userRepository;*/
-    private final UserService userService;
     @Autowired
-    public UserController(UserService userService) {
-        this.userService = userService;
-    }
+    private UserService userService;
+
+    @Autowired
+    private UserRepository userRepository;
 
     /*@RequestMapping(value = "", method = RequestMethod.GET)
     public List<UserEntity> getAllUsers(@RequestParam(name="lastName", required = false) String lastName) {
@@ -31,6 +30,11 @@ public class UserController {
         }
         return users;
     }*/
+
+    @RequestMapping(value = "", method = RequestMethod.GET)
+    public List<UserDto> getUsers() {
+        return null;
+    }
 
     @RequestMapping(value = "/{userId}", method = RequestMethod.GET)
     public UserDto getUserById(@PathVariable Long userId) {

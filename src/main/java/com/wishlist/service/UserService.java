@@ -11,17 +11,16 @@ import java.util.Optional;
 @Service
 public class UserService {
 
-    private final UserRepository userRepository;
-
     @Autowired
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
-
+    private UserRepository userRepository;
 
     public UserDto findById(Long userId) {
         Optional<UserEntity> userEntity = userRepository.findById(userId);
+        System.out.println(userEntity);
 
-        return (UserDto) UserDto.mapEntityToDto(userEntity);
+        //return UserDto.mapEntityToDto(userEntity);
+        return null;
     }
+
+
 }
