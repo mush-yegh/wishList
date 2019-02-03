@@ -1,6 +1,7 @@
 package com.wishlist.service;
 
 import com.wishlist.persistance.entity.CreateUser;
+import com.wishlist.persistance.entity.UpdateUser;
 import com.wishlist.persistance.entity.UserEntity;
 import com.wishlist.persistance.repository.UserRepository;
 import com.wishlist.service.dto.UserDto;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -35,5 +37,17 @@ public class UserService {
 
         UserEntity savedUser = userRepository.save(userEntity);
         return UserDto.mapEntityToDto(savedUser);
+    }
+
+    public Optional<UserDto> updateUser(UpdateUser updateUser) {
+
+        Optional<UserEntity> userCandidate = userRepository.findById(updateUser.getId());
+
+        if (userCandidate.isPresent()){
+            UserEntity userToUpdate = new UserEntity(updateUser);
+            UserEntity updatedUser = userRepository.save(userToUpdate);
+            return Optional.of(UserDto.mapEntityToDto(updatedUser));
+        }
+        return Optional.empty();
     }
 }

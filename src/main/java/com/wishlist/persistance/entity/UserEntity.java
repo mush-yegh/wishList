@@ -51,5 +51,13 @@ public class UserEntity {
         this.active = 1;
         this.created = LocalDate.now();
     }
+    public UserEntity(UpdateUser user) {
+        this.id = user.getId();
+        this.firstName = user.getFirstName();
+        this.lastName = user.getLastName();
+        this.birthDate = LocalDate.parse(user.getBirthDate());
+        this.mail = user.getMail();
+
+    }
 
 }
