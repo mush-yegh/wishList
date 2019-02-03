@@ -1,15 +1,12 @@
 package com.wishlist.controller;
 
 import com.wishlist.persistance.entity.CreateUser;
-import com.wishlist.persistance.entity.UserEntity;
-import com.wishlist.persistance.repository.UserRepository;
 import com.wishlist.service.UserService;
 import com.wishlist.service.dto.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/users")
@@ -31,9 +28,8 @@ public class UserController {
     }
 
     @RequestMapping(value = "", method = RequestMethod.POST)
-    //                                firstName, lastName, mail, birthDate
-    public UserDto addUser(CreateUser user){
-        UserDto newUser = userService.save(user);
+    public UserDto addUser(CreateUser user){    //firstName, lastName, mail, birthDate
+        UserDto newUser = userService.saveUser(user);
         return newUser;
     }
 
