@@ -1,6 +1,7 @@
 package com.wishlist.persistance.entity;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.wishlist.service.dto.UserDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -43,7 +44,7 @@ public class UserEntity {
     @JsonManagedReference
     private List<WishEntity> wishes;
 
-    public UserEntity(CreateUser user) {
+    public UserEntity(UserDto user) {
         this.firstName = user.getFirstName();
         this.lastName = user.getLastName();
         this.birthDate = LocalDate.parse(user.getBirthDate());
@@ -51,13 +52,6 @@ public class UserEntity {
         this.active = 1;
         this.created = LocalDate.now();
     }
-    public UserEntity(UpdateUser user) {
-        this.id = user.getId();
-        this.firstName = user.getFirstName();
-        this.lastName = user.getLastName();
-        this.birthDate = LocalDate.parse(user.getBirthDate());
-        this.mail = user.getMail();
 
-    }
 
 }

@@ -1,7 +1,5 @@
 package com.wishlist.service;
 
-import com.wishlist.persistance.entity.CreateUser;
-import com.wishlist.persistance.entity.UpdateUser;
 import com.wishlist.persistance.entity.UserEntity;
 import com.wishlist.persistance.repository.UserRepository;
 import com.wishlist.service.dto.UserDto;
@@ -32,19 +30,21 @@ public class UserService {
     }
 
 
-    public UserDto saveUser(CreateUser user) {
+    public UserDto saveUser(UserDto user) {
         UserEntity userEntity = new UserEntity(user);
 
         UserEntity savedUser = userRepository.save(userEntity);
+        //in case of sqlException(non unique mail) what to do ?
         return UserDto.mapEntityToDto(savedUser);
     }
 
-    public Optional<UserDto> updateUser(UpdateUser updateUser) {
+    public Optional<UserDto> updateUser(UserDto user) {
 
-        Optional<UserEntity> userCandidate = userRepository.findById(updateUser.getId());
+        Optional<UserEntity> userCandidate = userRepository.findById(user.getId());
 
         if (userCandidate.isPresent()){
-            UserEntity userToUpdate = new UserEntity(updateUser);
+            UserEntity userToUpdate = new UserEntity(user);
+            userToUpdate.setId(user.getId());
             UserEntity updatedUser = userRepository.save(userToUpdate);
             return Optional.of(UserDto.mapEntityToDto(updatedUser));
         }
