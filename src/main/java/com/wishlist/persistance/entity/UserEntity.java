@@ -47,8 +47,8 @@ public class UserEntity {
     public UserEntity(UserDto user) {
         this.firstName = user.getFirstName();
         this.lastName = user.getLastName();
-        this.birthDate = LocalDate.parse(user.getBirthDate());
         this.mail = user.getMail();
+        this.birthDate = LocalDate.parse(user.getBirthDate());
         this.active = 1;
         this.created = LocalDate.now();
     }

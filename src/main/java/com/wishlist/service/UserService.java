@@ -16,17 +16,19 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public UserDto findById(Long userId) {
-        UserEntity userEntity = userRepository.findById(userId).get();
-
-        return UserDto.mapEntityToDto(userEntity);
-    }
-
     public List<UserDto> findAll() {
 
         List<UserEntity> userEntities = (List<UserEntity>) userRepository.findAll();
 
         return UserDto.mapUserEntitiesToDto(userEntities);
+    }
+
+    public UserDto findById(Long userId) {
+
+        UserEntity userEntity = userRepository.findById(userId).get();
+        //TO DO - have to check if user exist
+
+        return UserDto.mapEntityToDto(userEntity);
     }
 
 
@@ -40,13 +42,20 @@ public class UserService {
 
     public Optional<UserDto> updateUser(UserDto user) {
 
-        Optional<UserEntity> userCandidate = userRepository.findById(user.getId());
-
-        if (userCandidate.isPresent()){
+        if (userRepository.existsById(user.getId())) {
             UserEntity userToUpdate = new UserEntity(user);
             userToUpdate.setId(user.getId());
             UserEntity updatedUser = userRepository.save(userToUpdate);
             return Optional.of(UserDto.mapEntityToDto(updatedUser));
+        }
+        return Optional.empty();
+    }
+
+    public Optional<Long> deleteUserById(Long userId) {
+
+        if (userRepository.existsById(userId)) {
+            userRepository.deleteById(userId);
+            return Optional.of(userId);
         }
         return Optional.empty();
     }

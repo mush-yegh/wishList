@@ -18,31 +18,46 @@ public class UserController {
     private UserService userService;
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public List<UserDto> getUsers() {
+    @ResponseBody
+    public ResponseEntity<List<UserDto>> getUsers() {
+        //DEFAULT -if list is empty, returns empty list
         List<UserDto> users = userService.findAll();
-        return users;
+        return new ResponseEntity<>(users, HttpStatus.OK);
     }
+
     @RequestMapping(value = "/{userId}", method = RequestMethod.GET)
-    public @ResponseBody ResponseEntity<UserDto>  getUserById(@PathVariable Long userId) {
+    @ResponseBody
+    public ResponseEntity<UserDto>  getUserById(@PathVariable Long userId) {
         UserDto user = userService.findById(userId);
         return new ResponseEntity(user, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/addNewUser", method = RequestMethod.POST)
-    public UserDto addUser(UserDto user){
+    @ResponseBody
+    public ResponseEntity<UserDto> addUser(UserDto user){
         UserDto newUser = userService.saveUser(user);
-        return newUser;
+        return new ResponseEntity<>(newUser, HttpStatus.CREATED);
     }
 
-//TO DO
     @RequestMapping(value = "/", method = RequestMethod.PUT)
-    public @ResponseBody ResponseEntity<UserDto> editUser(UserDto user){
+    @ResponseBody
+    public ResponseEntity<UserDto> editUser(UserDto user){
 
         Optional<UserDto> updatedUser= userService.updateUser(user);
         if (updatedUser.isPresent()){
-            return new ResponseEntity(updatedUser,HttpStatus.OK);
+            return new ResponseEntity<>(updatedUser.get(),HttpStatus.OK);
         }
-        return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(updatedUser.get(),HttpStatus.BAD_REQUEST);
+    }
+
+    @RequestMapping(value = "/{userId}", method = RequestMethod.DELETE)
+    @ResponseBody
+    public ResponseEntity<Void> deleteById(@PathVariable Long userId){
+        Optional<Long> deletedUserId = userService.deleteUserById(userId);
+        if (deletedUserId.isPresent()){
+            return new ResponseEntity(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
 }
