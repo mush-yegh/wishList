@@ -16,6 +16,8 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
+
+    //TO DO - have o retrieve all users with isActive == 1
     public List<UserDto> findAll() {
 
         List<UserEntity> userEntities = (List<UserEntity>) userRepository.findAll();
@@ -23,6 +25,7 @@ public class UserService {
         return UserDto.mapUserEntitiesToDto(userEntities);
     }
 
+    //TO DO - have o retrieve all users with isActive: 1 and userId: {userId}
     public UserDto findById(Long userId) {
 
         UserEntity userEntity = userRepository.findById(userId).get();
@@ -51,6 +54,7 @@ public class UserService {
         return Optional.empty();
     }
 
+    //TO DO have to set isActive - 0
     public Optional<Long> deleteUserById(Long userId) {
 
         if (userRepository.existsById(userId)) {
