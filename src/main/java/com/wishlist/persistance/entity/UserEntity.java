@@ -35,7 +35,7 @@ public class UserEntity {
     private LocalDate birthDate;
 
     @Column(name = "active")
-    private Byte active;
+    private Integer active;
 
     @Column(name = "created")
     private LocalDate created;
