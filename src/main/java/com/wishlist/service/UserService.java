@@ -17,21 +17,21 @@ public class UserService {
     private UserRepository userRepository;
 
 
-    //TO DO - have o retrieve all users with isActive == 1
-    public List<UserDto> findAll() {
+    public List<UserDto> findAllActiveUsers() {
 
-        List<UserEntity> userEntities = (List<UserEntity>) userRepository.findAll();
+        List<UserEntity> userEntities = userRepository.findAllByActive(1);
 
         return UserDto.mapUserEntitiesToDto(userEntities);
     }
 
-    //TO DO - have o retrieve all users with isActive: 1 and userId: {userId}
-    public UserDto findById(Long userId) {
+    //TO DO - have to retrieve a user with isActive: 1 and userId: {userId}
+    public Optional<UserDto> findById(Long userId) {
 
-        UserEntity userEntity = userRepository.findById(userId).get();
-        //TO DO - have to check if user exist
-
-        return UserDto.mapEntityToDto(userEntity);
+        if (userRepository.existsById(userId)) {
+            UserEntity userEntity = userRepository.findById(userId).get();
+            return Optional.of(UserDto.mapEntityToDto(userEntity));
+        }
+        return Optional.empty();
     }
 
 
@@ -54,11 +54,13 @@ public class UserService {
         return Optional.empty();
     }
 
-    //TO DO have to set isActive - 0
     public Optional<Long> deleteUserById(Long userId) {
 
         if (userRepository.existsById(userId)) {
-            userRepository.deleteById(userId);
+            UserEntity userToDelete = userRepository.findById(userId).get();
+            userToDelete.setActive(0);
+            userRepository.save(userToDelete);
+
             return Optional.of(userId);
         }
         return Optional.empty();
