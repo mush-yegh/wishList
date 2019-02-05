@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 
 @Data
 @Entity
@@ -14,6 +15,11 @@ public class WishEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "owner_id")
+    @JsonBackReference
+    private UserEntity owner;
 
     @Column(name = "title", nullable = false)
     private String title;
@@ -27,10 +33,15 @@ public class WishEntity {
     @Column(name = "price", nullable = false)
     private double price;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    @JsonBackReference
-    private UserEntity owner;
+    @Column(name = "created", nullable = false)
+    private LocalDate created;
+
+    @Column(name = "updated")
+    private LocalDate updated;
+
+    @Column(name = "active", nullable = false)
+    private Integer active;
+
 
     @Override
     public String toString() {
