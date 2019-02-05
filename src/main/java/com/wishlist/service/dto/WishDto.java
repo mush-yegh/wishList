@@ -21,13 +21,20 @@ public class WishDto {
     private String description;
     private Double price;
 
-    public static List<WishDto> mapEntityListToDto(List<WishEntity> wishList){
+    public WishDto(WishEntity newWish) {
+        this.title = newWish.getTitle();
+        this.link = newWish.getLink();
+        this.description = newWish.getDescription();
+        this.price = newWish.getPrice();
+    }
+
+    public static List<WishDto> mapEntityListToDto(List<WishEntity> wishList) {
         return wishList.stream()
                 .map(WishDto::mapEntityToDto)
                 .collect(Collectors.toList());
     }
 
-    public static WishDto mapEntityToDto(WishEntity wish){
+    public static WishDto mapEntityToDto(WishEntity wish) {
         return WishDto.builder()
                 .id(wish.getId())
                 .ownerId(wish.getOwner().getId())

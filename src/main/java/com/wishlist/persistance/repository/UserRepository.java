@@ -9,9 +9,6 @@ import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<UserEntity, Long> {
 
-
-    //List<UserEntity> findAllByFirstName();
-
     Optional<UserEntity> findById(Long userId);
 
     List<UserEntity> findAllByActive(Integer val);

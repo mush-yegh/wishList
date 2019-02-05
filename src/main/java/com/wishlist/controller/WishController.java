@@ -16,20 +16,27 @@ public class WishController {
     @Autowired
     WishService wishService;
 
-    @RequestMapping(value = "/{userId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{ownerId}", method = RequestMethod.GET)
     @ResponseBody
-    public ResponseEntity<WishDto> getUserWishList(@PathVariable Long userId) {
-        List<WishDto> userWishList = wishService.getUserWishList(userId);
+    public ResponseEntity<WishDto> getUserWishList(@PathVariable Long ownerId) {
+        List<WishDto> userWishList = wishService.getUserWishList(ownerId);
         return new ResponseEntity(userWishList, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/{userId}/{wishId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{ownerId}/{wishId}", method = RequestMethod.GET)
     @ResponseBody
-    public ResponseEntity getUserWishById(@PathVariable Long userId, @PathVariable Long wishId) {
-        Optional<WishDto> userWish = wishService.getUserWish(userId, wishId);
-        if (userWish.isPresent()){
-            return new ResponseEntity(userWish,HttpStatus.OK);
+    public ResponseEntity getUserWishById(@PathVariable Long ownerId, @PathVariable Long wishId) {
+        Optional<WishDto> userWish = wishService.getUserWish(ownerId, wishId);
+        if (userWish.isPresent()) {
+            return new ResponseEntity(userWish, HttpStatus.OK);
         }
         return new ResponseEntity(HttpStatus.BAD_REQUEST);
+    }
+
+    @RequestMapping(value = "/{ownerId}", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseEntity<WishDto> addNewWish(@PathVariable Long ownerId, WishDto wishDto) {
+        WishDto savedWish = wishService.saveWish(ownerId, wishDto);
+        return new ResponseEntity<>(savedWish, HttpStatus.CREATED);
     }
 }
