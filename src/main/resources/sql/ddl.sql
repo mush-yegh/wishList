@@ -25,3 +25,17 @@ CREATE TABLE IF NOT EXISTS wish (
         price DECIMAL (10,2) NOT NULL,
         PRIMARY KEY (id)
 )  ENGINE=INNODB;
+
+ALTER TABLE `wishlist_test`.`wish`
+        ADD COLUMN `created` DATE NOT NULL AFTER `price`,
+        ADD COLUMN `updated` DATE NULL DEFAULT NULL AFTER `created`,
+        ADD COLUMN `active` TINYINT NOT NULL AFTER `updated`;
+
+ALTER TABLE `wishlist_test`.`wish`
+        DROP FOREIGN KEY `FKkqi4lso34o5xjkhiw71uadwvu`;
+ALTER TABLE `wishlist_test`.`wish`
+        CHANGE COLUMN `user_id` `owner_id` BIGINT(20) NOT NULL ;
+ALTER TABLE `wishlist_test`.`wish`
+        ADD CONSTRAINT `FKkqi4lso34o5xjkhiw71uadwvu`
+                FOREIGN KEY (`owner_id`)
+                        REFERENCES `wishlist_test`.`user` (`id`);

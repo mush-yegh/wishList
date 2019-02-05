@@ -21,7 +21,7 @@ public class UserService {
 
         List<UserEntity> userEntities = userRepository.findAllByActive(1);
 
-        return UserDto.mapUserEntitiesToDto(userEntities);
+        return UserDto.mapEntitiyListToDto(userEntities);
     }
 
     //TO DO - have to retrieve a user with isActive: 1 and userId: {userId}

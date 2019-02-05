@@ -7,7 +7,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -38,7 +37,7 @@ public class UserDto {
                 .build();
     }
 
-    public static List<UserDto> mapUserEntitiesToDto(List<UserEntity> userEntities) {
+    public static List<UserDto> mapEntitiyListToDto(List<UserEntity> userEntities) {
 
         return userEntities.stream()
                 .map(UserDto::mapEntityToDto)
