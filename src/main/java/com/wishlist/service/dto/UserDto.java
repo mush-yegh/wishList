@@ -16,7 +16,9 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserDto {
+
     private Long id;
+
     private String firstName;
     private String lastName;
 
@@ -24,13 +26,6 @@ public class UserDto {
     private String birthDate;
 
     private List<WishEntity> wishes;
-
-    /*public UserDto(String firstName, String lastName, String mail, String birthDate) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.mail = mail;
-        this.birthDate = LocalDate.parse(birthDate);
-    }*/
 
     public static UserDto mapEntityToDto(UserEntity userEntity) {
         return UserDto.builder()
