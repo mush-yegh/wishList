@@ -9,4 +9,8 @@ import java.util.List;
 public interface WishRepository extends JpaRepository<WishEntity, Long> {
 
     List<WishEntity> findAllByOwner(UserEntity owner);
+
+    WishEntity findWishEntityByOwnerAndId(UserEntity owner, Long wishId);
+    //WishEntity findWishEntityByOwner(UserEntity owner);
+
 }

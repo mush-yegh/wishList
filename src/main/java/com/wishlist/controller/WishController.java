@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(value = "/wishes")
@@ -20,5 +21,15 @@ public class WishController {
     public ResponseEntity<WishDto> getUserWishList(@PathVariable Long userId) {
         List<WishDto> userWishList = wishService.getUserWishList(userId);
         return new ResponseEntity(userWishList, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/{userId}/{wishId}", method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity getUserWishById(@PathVariable Long userId, @PathVariable Long wishId) {
+        Optional<WishDto> userWish = wishService.getUserWish(userId, wishId);
+        if (userWish.isPresent()){
+            return new ResponseEntity(userWish,HttpStatus.OK);
+        }
+        return new ResponseEntity(HttpStatus.BAD_REQUEST);
     }
 }
