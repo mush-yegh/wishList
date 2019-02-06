@@ -10,7 +10,13 @@ public interface WishRepository extends JpaRepository<WishEntity, Long> {
 
     List<WishEntity> findAllByOwner(UserEntity owner);
 
+    List<WishEntity> findAllByOwnerAndActive(UserEntity owner, Integer active);
+
     WishEntity findWishEntityByOwnerAndId(UserEntity owner, Long wishId);
+
+    boolean existsByOwnerAndId(UserEntity owner, Long wishId);
+
+
 
     //WishEntity
 }
