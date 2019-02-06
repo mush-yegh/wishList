@@ -33,14 +33,14 @@ public class UserController {
                 .orElseGet(() -> new ResponseEntity<>(null, HttpStatus.NOT_FOUND));
     }
 
-    @RequestMapping(value = "/addNewUser", method = RequestMethod.POST)
+    @RequestMapping(value = "/", method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity<UserDto> addUser(UserDto user) {
         UserDto newUser = userService.saveUser(user);
         return new ResponseEntity<>(newUser, HttpStatus.CREATED);
     }
 
-    @RequestMapping(value = "/", method = RequestMethod.PUT)
+    /*@RequestMapping(value = "/", method = RequestMethod.PUT)
     @ResponseBody
     public ResponseEntity<UserDto> editUser(UserDto user) {
 
@@ -48,7 +48,7 @@ public class UserController {
         return updatedUser
                 .map(userDto -> new ResponseEntity<>(userDto, HttpStatus.OK))
                 .orElseGet(() -> new ResponseEntity<>(updatedUser.get(), HttpStatus.BAD_REQUEST));
-    }
+    }*/
 
     @RequestMapping(value = "/{userId}", method = RequestMethod.DELETE)
     @ResponseBody
