@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,6 +26,17 @@ public class UserDto {
     private String birthDate;
 
     private List<WishEntity> wishes;
+
+    public static UserEntity mapDtoToEntity(UserDto userDto) {
+        return UserEntity.builder()
+                .firstName(userDto.getFirstName())
+                .lastName(userDto.getLastName())
+                .mail(userDto.getMail())
+                .birthDate(LocalDate.parse(userDto.getBirthDate()))
+                .active(1)
+                .created(LocalDate.now())
+                .build();
+    }
 
     public static UserDto mapEntityToDto(UserEntity userEntity) {
         return UserDto.builder()

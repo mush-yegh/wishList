@@ -20,7 +20,6 @@ public class UserService {
     public List<UserDto> findAllActiveUsers() {
 
         List<UserEntity> userEntities = userRepository.findAllByActive(1);
-
         return UserDto.mapEntitiyListToDto(userEntities);
     }
 
@@ -36,7 +35,8 @@ public class UserService {
 
 
     public UserDto saveUser(UserDto user) {
-        UserEntity userEntity = new UserEntity(user);
+
+        UserEntity userEntity = UserDto.mapDtoToEntity(user);
 
         UserEntity savedUser = userRepository.save(userEntity);
         //in case of sqlException(non unique mail) what to do ?
@@ -46,7 +46,9 @@ public class UserService {
     public Optional<UserDto> updateUser(UserDto user) {
 
         if (userRepository.existsById(user.getId())) {
-            UserEntity userToUpdate = new UserEntity(user);
+
+            UserEntity userToUpdate = UserDto.mapDtoToEntity(user);
+
             userToUpdate.setId(user.getId());
             UserEntity updatedUser = userRepository.save(userToUpdate);
             return Optional.of(UserDto.mapEntityToDto(updatedUser));

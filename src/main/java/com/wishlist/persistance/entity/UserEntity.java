@@ -2,10 +2,7 @@ package com.wishlist.persistance.entity;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.wishlist.service.dto.UserDto;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -14,6 +11,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Entity
 @Table(name = "user")
 //@ToString(exclude = "wishes")
@@ -43,15 +41,5 @@ public class UserEntity {
     @OneToMany(mappedBy = "owner")
     @JsonManagedReference
     private List<WishEntity> wishes;
-
-    public UserEntity(UserDto user) {
-        this.firstName = user.getFirstName();
-        this.lastName = user.getLastName();
-        this.mail = user.getMail();
-        this.birthDate = LocalDate.parse(user.getBirthDate());
-        this.active = 1;
-        this.created = LocalDate.now();
-    }
-
 
 }
