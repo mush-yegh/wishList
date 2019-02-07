@@ -21,11 +21,13 @@ public class WishDto {
     private String description;
     private Double price;
 
-    public WishDto(WishEntity newWish) {
-        this.title = newWish.getTitle();
-        this.link = newWish.getLink();
-        this.description = newWish.getDescription();
-        this.price = newWish.getPrice();
+    public static WishEntity mapDtoToEntity(WishDto wishDto){
+        return WishEntity.builder()
+                .title(wishDto.getTitle())
+                .link(wishDto.getLink())
+                .description(wishDto.getDescription())
+                .price(wishDto.getPrice())
+                .build();
     }
 
     public static List<WishDto> mapEntityListToDto(List<WishEntity> wishList) {

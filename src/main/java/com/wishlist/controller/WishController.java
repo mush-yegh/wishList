@@ -19,19 +19,18 @@ public class WishController {
 
     @RequestMapping(value = "/{ownerId}", method = RequestMethod.GET)
     @ResponseBody
-    public ResponseEntity<WishDto> getUserWishList(@PathVariable Long ownerId) {
+    public ResponseEntity<List<WishDto>> getUserWishList(@PathVariable Long ownerId) {
         List<WishDto> userWishList = wishService.getUserWishList(ownerId);
-        return new ResponseEntity(userWishList, HttpStatus.OK);
+        return new ResponseEntity<>(userWishList, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/{ownerId}/{wishId}", method = RequestMethod.GET)
     @ResponseBody
     public ResponseEntity<WishDto> getUserWishById(@PathVariable Long ownerId, @PathVariable Long wishId) {
         Optional<WishDto> userWish = wishService.getUserWish(ownerId, wishId);
-        if (userWish.isPresent()) {
-            return new ResponseEntity(userWish, HttpStatus.OK);
-        }
-        return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        return userWish
+                .map(wishDto -> new ResponseEntity<>(wishDto, HttpStatus.OK))
+                .orElseGet(() -> new ResponseEntity<>(userWish.get(), HttpStatus.BAD_REQUEST));
     }
 
     @RequestMapping(value = "/{ownerId}", method = RequestMethod.POST)
@@ -43,9 +42,11 @@ public class WishController {
 
     @RequestMapping(value = "/{ownerId}/{wishId}", method = RequestMethod.PUT)
     @ResponseBody
-    public ResponseEntity<WishDto> updateWish(@PathVariable Long ownerId, @PathVariable Long wishId) {
-        //TO DO
-        throw new NotImplementedException();
+    public ResponseEntity<WishDto> updateWish(@PathVariable Long ownerId, @PathVariable Long wishId, WishDto wishDto) {
+        Optional<WishDto> updatedWish = wishService.updateWish(ownerId, wishId, wishDto);
+        return updatedWish
+                .map(wishDto1 -> new ResponseEntity<>(wishDto1, HttpStatus.OK))
+                .orElseGet(() -> new ResponseEntity<>(updatedWish.get(), HttpStatus.BAD_REQUEST));
     }
 
     @RequestMapping(value = "/{ownerId}/{wishId}", method = RequestMethod.DELETE)
@@ -64,7 +65,7 @@ public class WishController {
     @RequestMapping(value = "/{ownerId}", method = RequestMethod.DELETE)
     @ResponseBody
     public ResponseEntity<Void> deleteWishes(@PathVariable Long ownerId) {
-        wishService.deleteWishesByOwnerd(ownerId);
+        wishService.deleteWishesByOwnerId(ownerId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

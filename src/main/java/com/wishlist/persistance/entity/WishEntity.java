@@ -3,10 +3,7 @@ package com.wishlist.persistance.entity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.wishlist.persistance.entity.UserEntity;
 import com.wishlist.service.dto.WishDto;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -14,6 +11,7 @@ import java.time.LocalDate;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Entity
 @Table(name = "wish")
 public class WishEntity {
@@ -47,13 +45,6 @@ public class WishEntity {
     @Column(name = "active", nullable = false)
     private Integer active;
 
-    //for WishService -> saveWish(wishDto)
-    public WishEntity(WishDto wishDto) {
-        this.title = wishDto.getTitle();
-        this.link = wishDto.getLink();
-        this.description = wishDto.getDescription();
-        this.price = wishDto.getPrice();
-    }
 
     @Override
     public String toString() {

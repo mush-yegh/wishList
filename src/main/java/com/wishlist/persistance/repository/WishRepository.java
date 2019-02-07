@@ -16,7 +16,4 @@ public interface WishRepository extends JpaRepository<WishEntity, Long> {
 
     boolean existsByOwnerAndId(UserEntity owner, Long wishId);
 
-
-
-    //WishEntity
 }

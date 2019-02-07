@@ -29,20 +29,35 @@ public class WishService {
     public Optional<WishDto> getUserWish(Long ownerId, Long wishId) {
         UserEntity owner = userRepository.findById(ownerId).get();
         Optional<WishEntity> wishEntity = Optional.ofNullable(wishRepository.findWishEntityByOwnerAndId(owner, wishId));
-        if (wishEntity.isPresent()) {
-            return Optional.of( WishDto.mapEntityToDto(wishEntity.get()) );
-        }
-        return Optional.empty();
+        return wishEntity.map(WishDto::mapEntityToDto);
     }
 
     public WishDto saveWish(Long ownerId, WishDto wishDto) {
-        WishEntity wishEntity = new WishEntity(wishDto);
+
+        WishEntity wishEntity = WishDto.mapDtoToEntity(wishDto);
+
         UserEntity owner = userRepository.findById(ownerId).get();
+
         wishEntity.setOwner(owner);
         wishEntity.setCreated(LocalDate.now());
         wishEntity.setActive(1);
+
         WishEntity savedWish = wishRepository.save(wishEntity);
         return WishDto.mapEntityToDto(savedWish);
+    }
+
+    public Optional<WishDto> updateWish(Long ownerId, Long wishId, WishDto wishDto) {
+
+        UserEntity owner = userRepository.findById(ownerId).get();
+
+        if (wishRepository.existsByOwnerAndId(owner, wishId)){
+            WishEntity wishToUpdate = WishDto.mapDtoToEntity(wishDto);
+            wishToUpdate.setId(wishDto.getId());
+
+            WishEntity updatedWish = wishRepository.save(wishToUpdate);
+            return Optional.of(WishDto.mapEntityToDto(updatedWish));
+        }
+        return Optional.empty();
     }
 
     public Optional<Long> deleteWishById(Long ownerId, Long wishId) {
@@ -56,15 +71,12 @@ public class WishService {
         return Optional.empty();
     }
 
-    public void deleteWishesByOwnerd(Long ownerId) {
+    public void deleteWishesByOwnerId(Long ownerId) {
         List<WishEntity> wishes = wishRepository.findAllByOwnerAndActive(userRepository.findById(ownerId).get(), 1);
-        if (!wishes.isEmpty()){
+        if (!wishes.isEmpty()) {
             wishes.stream().forEach(wishEntity -> wishEntity.setActive(0));
 
             wishRepository.saveAll(wishes);
-            /*for (WishEntity wish: wishes) {
-                wish.setActive(0);
-            }*/
         }
     }
 }
