@@ -39,3 +39,28 @@ ALTER TABLE `wishlist_test`.`wish`
         ADD CONSTRAINT `FKkqi4lso34o5xjkhiw71uadwvu`
                 FOREIGN KEY (`owner_id`)
                         REFERENCES `wishlist_test`.`user` (`id`);
+
+
+CREATE TABLE `request`
+(
+        `id`           bigint(20) NOT NULL,
+        `requester_id` bigint(20) NOT NULL,
+        `receiver_id`  bigint(20) NOT NULL,
+        `status`       tinyint(4) NOT NULL DEFAULT 0,
+        `request_date` datetime   NOT NULL DEFAULT CURRENT_TIMESTAMP,
+        `respond_date` date                DEFAULT NULL,
+        PRIMARY KEY (`id`),
+        UNIQUE KEY `requester_id` (`requester_id`, `receiver_id`),
+        KEY `fk_request_1_idx` (`requester_id`),
+        KEY `fk_request_2_idx` (`receiver_id`),
+        CONSTRAINT `FK97t94dqg8opu4x9cgm94fchw7` FOREIGN KEY (`id`) REFERENCES `user` (`id`),
+        CONSTRAINT `FKdkkupgeywvc38759q9xq85ip4` FOREIGN KEY (`receiver_id`) REFERENCES `request` (`id`),
+        CONSTRAINT `FKwef60neo5g6yxsxh751778b` FOREIGN KEY (`requester_id`) REFERENCES `request` (`id`),
+        CONSTRAINT `fk_request_1` FOREIGN KEY (`requester_id`) REFERENCES `user` (`id`)
+                ON DELETE NO ACTION ON UPDATE NO ACTION,
+        CONSTRAINT `fk_request_2` FOREIGN KEY (`receiver_id`) REFERENCES `user` (`id`)
+                ON DELETE NO ACTION ON UPDATE NO ACTION
+)
+        ENGINE = InnoDB
+        DEFAULT CHARSET = utf8;
+

@@ -42,4 +42,12 @@ public class UserEntity {
     @JsonManagedReference
     private List<WishEntity> wishes;
 
+    @ManyToMany(mappedBy = "requester")
+    @JsonManagedReference
+    private List<RequestEntity> sentRequest;
+
+    @ManyToMany(mappedBy = "receiver")
+    @JsonManagedReference
+    private List<RequestEntity> receivedRequest;
+
 }
