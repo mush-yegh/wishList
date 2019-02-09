@@ -20,7 +20,7 @@ public class UserService {
     public List<UserDto> findAllActiveUsers() {
 
         List<UserEntity> userEntities = userRepository.findAllByActive(1);
-        return UserDto.mapEntitiyListToDto(userEntities);
+        return UserDto.mapEntityListToDto(userEntities);
     }
 
     //TO DO - have to retrieve a user with isActive: 1 and userId: {userId}

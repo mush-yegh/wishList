@@ -2,11 +2,10 @@ package com.wishlist.controller;
 
 import com.wishlist.service.WishService;
 import com.wishlist.service.dto.WishDto;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 import java.util.Optional;

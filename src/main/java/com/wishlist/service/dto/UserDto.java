@@ -1,5 +1,7 @@
 package com.wishlist.service.dto;
 
+import com.wishlist.persistance.entity.RequestEntity;
+import com.wishlist.persistance.entity.SentRequestEntity;
 import com.wishlist.persistance.entity.UserEntity;
 import com.wishlist.persistance.entity.WishEntity;
 import lombok.AllArgsConstructor;
@@ -25,7 +27,12 @@ public class UserDto {
     private String mail;
     private String birthDate;
 
-    private List<WishEntity> wishes;
+    //private List<WishEntity> wishes;
+
+    private List<SentRequestEntity> sentRequests;
+
+    //private List<RequestEntity> sentRequests;
+    //private List<RequestEntity> receivedRequests;
 
     public static UserEntity mapDtoToEntity(UserDto userDto) {
         return UserEntity.builder()
@@ -45,11 +52,16 @@ public class UserDto {
                 .lastName(userEntity.getLastName())
                 .mail(userEntity.getMail())
                 .birthDate((userEntity.getBirthDate()).toString())
-                .wishes(userEntity.getWishes())
+                //.wishes(userEntity.getWishes())
+                //.sentRequests(userEntity.getSentRequests())
+                //.receivedRequests(userEntity.getReceivedRequests())
+
+
+                //.sentRequests(userEntity.getSentRequests())
                 .build();
     }
 
-    public static List<UserDto> mapEntitiyListToDto(List<UserEntity> userEntities) {
+    public static List<UserDto> mapEntityListToDto(List<UserEntity> userEntities) {
 
         return userEntities.stream()
                 .map(UserDto::mapEntityToDto)
